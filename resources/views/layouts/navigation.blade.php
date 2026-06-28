@@ -1,6 +1,7 @@
-<aside
-    class="fixed inset-y-0 left-0 z-50 w-72 bg-[#111827] border-r-4 border-[#D4AF37] text-white hidden lg:flex flex-col">
+<div id="sidebarBackdrop" class="fixed inset-0 bg-black/40 hidden z-40 lg:hidden">
+</div>
 
+<aside id="sidebar"  class="fixed inset-y-0 left-0 z-50 w-72 bg-[#111827] border-r-4 border-[#D4AF37] text-white flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <!-- LOGO -->
     <div class="h-24 flex items-center gap-3 px-6 border-b border-white/10">
         <div class="w-14 h-14 bg-white rounded-xl p-1.5 shadow">

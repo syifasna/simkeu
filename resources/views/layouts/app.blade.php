@@ -49,27 +49,49 @@
 </head>
 
 <body class="font-sans antialiased bg-[#F8F6F0]">
+
     <div class="min-h-screen bg-gradient-to-br from-[#F8F6F0] via-white to-[#F5E7B2]">
+
+        <!-- Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden">
+        </div>
 
         @include('layouts.navigation')
 
         <div class="lg:ml-72">
 
             <!-- TOPBAR -->
-            <div class="h-20 bg-white border-b border-[#F5E7B2] flex items-center justify-between px-8 shadow-sm">
+            <div
+                class="h-20 bg-white border-b border-[#F5E7B2]
+            flex items-center justify-between px-4 lg:px-8 shadow-sm">
 
-                <div>
-                    <h1 class="text-xl font-bold text-[#111827]">
-                        Sistem Manajemen Keuangan
-                    </h1>
-                    <p class="text-sm text-slate-500">
-                        SMP IT As-Sulthon
-                    </p>
+                <div class="flex items-center gap-4">
+
+                    <!-- HAMBURGER -->
+                    <button id="sidebarToggle" class="lg:hidden text-3xl text-[#111827]">
+
+                        ☰
+
+                    </button>
+
+                    <div>
+
+                        <h1 class="text-xl font-bold text-[#111827]">
+                            Sistem Manajemen Keuangan
+                        </h1>
+
+                        <p class="text-sm text-slate-500">
+                            SMP IT As-Sulthon
+                        </p>
+
+                    </div>
+
                 </div>
 
                 <div class="flex items-center gap-4">
 
-                    <div class="text-right">
+                    <div class="hidden sm:block text-right">
+
                         <p class="font-semibold text-[#111827]">
                             {{ Auth::user()->name }}
                         </p>
@@ -77,59 +99,107 @@
                         <p class="text-xs text-slate-500">
                             {{ Auth::user()->email }}
                         </p>
+
                     </div>
 
                     <x-dropdown align="right" width="48">
+
                         <x-slot name="trigger">
+
                             <button class="flex items-center gap-3">
 
                                 <div
-                                    class="w-11 h-11 rounded-full bg-[#D4AF37] text-[#111827]
-                                    flex items-center justify-center font-bold text-lg shadow">
+                                    class="w-11 h-11 rounded-full
+                                bg-[#D4AF37]
+                                text-[#111827]
+                                flex items-center justify-center
+                                font-bold
+                                text-lg
+                                shadow">
+
                                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+
                                 </div>
 
                             </button>
+
                         </x-slot>
 
                         <x-slot name="content">
 
                             <x-dropdown-link :href="route('profile.edit')">
+
                                 👤 Profile
+
                             </x-dropdown-link>
 
                             <form method="POST" action="{{ route('logout') }}">
+
                                 @csrf
 
                                 <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                            this.closest('form').submit();">
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
 
                                     🚪 Logout
+
                                 </x-dropdown-link>
+
                             </form>
 
                         </x-slot>
+
                     </x-dropdown>
 
                 </div>
+
             </div>
 
-            {{-- @isset($header)
-                <header class="bg-white/80 backdrop-blur border-b border-[#F5E7B2]">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset --}}
-
             <main class="py-8">
+
                 {{ $slot }}
+
             </main>
+
         </div>
+
     </div>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggle = document.getElementById('sidebarToggle');
+
+        toggle.addEventListener('click', () => {
+
+            sidebar.classList.remove('-translate-x-full');
+
+            overlay.classList.remove('hidden');
+
+        });
+
+        overlay.addEventListener('click', () => {
+
+            sidebar.classList.add('-translate-x-full');
+
+            overlay.classList.add('hidden');
+
+        });
+
+        window.addEventListener('resize', () => {
+
+            if (window.innerWidth >= 1024) {
+
+                sidebar.classList.remove('-translate-x-full');
+
+                overlay.classList.add('hidden');
+
+            }
+
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
